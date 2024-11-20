@@ -43,7 +43,8 @@
 
 //============================================================================================//
 //============================================================================================//
-
+//My first solution, O(n), 2ms (scroll down for by 2nd and much better solution with only a few adjustments)
+/*
 #include <iostream>
 using namespace std;
 
@@ -81,3 +82,50 @@ int main(int argc, const char * argv[]) {
     cout<<merged_strings<<endl;  //a1b2d345
     return 0;
 }
+*/
+
+
+
+//============================================================================================//
+//============================================================================================//
+//My second solution (0ms)
+
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        //get the max length of the two words
+        int length_of_word1 = word1.length();
+        int length_of_word2 = word2.length();
+        int max_length = length_of_word1  > length_of_word2 ? length_of_word1:length_of_word2;
+
+
+        string merged_string;
+        merged_string.reserve(max_length);  //using reserve() can help avoid multiple reallocations as the string grows, hence, reduce the overhead of memory allocations.
+
+        for (int i = 0 ; i < max_length ; i++)
+        {
+            if (length_of_word1 == 0)  
+            {
+                return word2;
+            }
+            else if (length_of_word2 == 0)
+            {
+                return word1;
+            }
+
+            if (i<length_of_word1)
+                {
+                    merged_string.push_back(word1[i]) ;
+                }
+            if (i<length_of_word2)
+                {
+                    merged_string.push_back(word2[i]);
+                }
+            cout<<merged_string<<endl;
+
+        }
+        return merged_string;
+    }
+
+
+};
