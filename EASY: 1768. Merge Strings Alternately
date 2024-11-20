@@ -67,21 +67,17 @@ public:
                 {
                     merged_string.push_back(word2[i]);
                 }
-            cout<<merged_string<<endl;
-
         }
-        cout<<merged_string<<endl;
         return merged_string;
     }
-
 
 };
 
 int main(int argc, const char * argv[]) {
     string word1 = "abd";
-    string word2 = "123";
+    string word2 = "12345";
     Solution solution;
     string merged_strings = solution.mergeAlternately(word1, word2);
-    cout<<merged_strings<<endl;  //a1b2d3
+    cout<<merged_strings<<endl;  //a1b2d345
     return 0;
 }
