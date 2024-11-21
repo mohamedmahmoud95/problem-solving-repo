@@ -82,6 +82,7 @@
 //============================================================================================//
 //============================================================================================//
 //My second solution, 0ms
+//scroll down for a better (more optimized) solution
 
 #include <iostream>
 using namespace std;
@@ -108,7 +109,7 @@ public:
         
         
         //A string t divides another string s if and only if s can be constructed by repeating t one or more times.
-        //thus, they should be equal to each otheres, or at least the smallest one of them should be equal to substring (of the same size) of the other one
+        //thus, they should be equal to each others, or at least the smallest one of them should be equal to the substring (of the same size) of the other one
         for(int i = 0 ; i < min(str1_length,str2_length) ; i++)
         {
             if (str1[i] != str2[i])
@@ -117,8 +118,8 @@ public:
             }
         }
         
-        //now, let's get the common substring betweeen both
-        //take the first char of any
+        //now, let's get the common substring between both
+        //take the first character of any
         //push back until you find a char that's equal to the first char of the stored common substring
         subString.push_back(str2[0]);
         for (int i = 1 ; i < str2_length ; i++)
@@ -131,7 +132,7 @@ public:
         }
         
         //now we know for sure that subString is the common substring
-        //what's left is to make sure that str1 only consists of a set of concatinated substring
+        //what's left is to make sure that str1 only consists of a set of concatenated substring
         
         int subString_length = subString.length();
         for (int i = 0 ; i < str1_length  ; )
@@ -155,4 +156,52 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
+
+//============================================================================================//
+//============================================================================================//
+//My 3rd solution: 0ms
+//better & more optimized solution:
+
+
+class Solution {
+public:
+    string gcdOfStrings(string str1, string str2) {
+         int str1_length = str1.length();
+        int str2_length = str2.length();
+        
+        if (str1 + str2 != str2 + str1)
+        {
+            return "";
+        }
+        
+
+        //now, let's get the common substring between both
+        //take the first character of any
+        //push back until you find a char that's equal to the first char of the stored common substring
+        string subString;
+        subString.push_back(str2[0]);
+        for (int i = 1 ; i < str2_length ; i++)
+        {
+            if (str2[0] == str2[i])
+            {
+                break;
+            }
+            subString.push_back(str2[i]);
+        }
+        
+        //now we know for sure that subString is the common substring
+        //what's left is to make sure that str1 only consists of a set of concatenated substring
+        
+        int subString_length = subString.length();
+        for (int i = 0 ; i < str1_length  ; )
+        {
+            for (int j = 0 ; j < subString_length ; j++, i++)
+            if (str1[i] != subString[j])
+            {
+                return "";
+            }
+        }
+        return subString;
+    }
+};
 
