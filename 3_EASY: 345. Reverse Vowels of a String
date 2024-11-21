@@ -1,0 +1,104 @@
+/*
+ https://leetcode.com/problems/reverse-vowels-of-a-string/description/
+ EASY: 345. Reverse Vowels of a String
+
+ Given a string s, reverse only all the vowels in the string and return it.
+
+ The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both lower and upper cases, more than once.
+
+  
+
+ Example 1:
+
+ Input: s = "IceCreAm"
+
+ Output: "AceCreIm"
+
+ Explanation:
+
+ The vowels in s are ['I', 'e', 'e', 'A']. On reversing the vowels, s becomes "AceCreIm".
+
+ Example 2:
+
+ Input: s = "leetcode"
+
+ Output: "leotcede"
+
+  
+
+ Constraints:
+
+ 1 <= s.length <= 3 * 105
+ s consist of printable ASCII characters.
+ */
+
+
+
+
+
+
+//My solution, 0ms
+
+class Solution {
+public:
+
+string swap (string str, int a, int b)
+{
+    char temp = str[a];
+    str[a] = str[b];
+    str[b] = temp;
+    return str;
+}
+
+bool isVowel(char a)
+{
+    
+    char char_in_lower_case = tolower(a);
+
+    char list_of_vowels [] = {'a', 'i', 'e',  'o', 'u'};
+    for (int i = 0 ; i < sizeof(list_of_vowels); i++)
+    {
+        if (char_in_lower_case == list_of_vowels[i])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+    string reverseVowels(string str) {
+        int str_length = str.length();
+    
+    
+    if (str_length <= 1)
+    {
+        return str;
+    }
+    
+    // if (str_length > (3*105))  //given constraint (commented because for some reason it did not pass a test case)
+    // {
+    //     return "";
+    // }
+    int index_of_first_vowel = 0;
+    int index_of_last_vowel = str_length-1;
+    
+    while (index_of_first_vowel < index_of_last_vowel){
+        while (isVowel(str[index_of_first_vowel]) == false && index_of_first_vowel < index_of_last_vowel)
+        {
+            index_of_first_vowel++;
+        }
+        while (isVowel(str[index_of_last_vowel]) == false && index_of_last_vowel > index_of_first_vowel)
+        {
+            index_of_last_vowel--;
+        }
+        str = swap(str, index_of_first_vowel, index_of_last_vowel );
+        index_of_first_vowel++;
+        index_of_last_vowel--;
+        cout<<str<<endl;
+    }
+    
+    cout<<str<<endl;
+    return str;
+
+    }
+};
