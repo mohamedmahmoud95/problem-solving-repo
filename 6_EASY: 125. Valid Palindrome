@@ -1,0 +1,77 @@
+
+/*
+ https://leetcode.com/problems/valid-palindrome/description/
+ 125. Valid Palindrome
+ 
+ A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+
+ Given a string s, return true if it is a palindrome, or false otherwise.
+
+  
+
+ Example 1:
+
+ Input: s = "A man, a plan, a canal: Panama"
+ Output: true
+ Explanation: "amanaplanacanalpanama" is a palindrome.
+ Example 2:
+
+ Input: s = "race a car"
+ Output: false
+ Explanation: "raceacar" is not a palindrome.
+ Example 3:
+
+ Input: s = " "
+ Output: true
+ Explanation: s is an empty string "" after removing non-alphanumeric characters.
+ Since an empty string reads the same forward and backward, it is a palindrome.
+
+ */
+
+#include <iostream>
+using namespace std;
+#include<string>
+
+class Solution {
+public:
+
+    bool isAlphanumeric (char c){
+        if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+                   return true;
+               }
+        return false;
+    }
+    
+    bool isPalindrome(string s) {
+        //1- handle constraints:
+        if (s.length()<=1)
+        {
+            return true; //an empty string, or a string of 1 character reads the same forward and backward
+        }
+
+        
+        int  right = s.length()-1;
+        int  left = 0;
+        while (left < right)
+        {
+            while (!isAlphanumeric(s[left]) && left < right)
+                left++;
+            while (!isAlphanumeric(s[right]) && left < right)
+                right --;
+            if (tolower(s[left]) != tolower(s[right]))
+                return false;
+            left ++;
+            right --;
+        }
+        return true;
+
+    }
+};
+
+int main(int argc, const char * argv[]) {
+    string s = "A man, a plan, a canal: Panama";
+    Solution solution;
+    solution.isPalindrome(s);
+    cout<<( solution.isPalindrome(s) ? "True" : "False" )<<endl;
+    return 0;
+}
