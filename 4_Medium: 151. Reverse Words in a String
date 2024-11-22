@@ -1,0 +1,100 @@
+/*
+ https://leetcode.com/problems/reverse-words-in-a-string/description/
+ 151. Reverse Words in a String
+ Given an input string s, reverse the order of the words.
+
+ A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+
+ Return a string of the words in reverse order concatenated by a single space.
+
+ Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
+
+  
+
+ Example 1:
+
+ Input: s = "the sky is blue"
+ Output: "blue is sky the"
+ Example 2:
+
+ Input: s = "  hello world  "
+ Output: "world hello"
+ Explanation: Your reversed string should not contain leading or trailing spaces.
+ Example 3:
+
+ Input: s = "a good   example"
+ Output: "example good a"
+ Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
+  
+
+ Constraints:
+
+ 1 <= s.length <= 104
+ s contains English letters (upper-case and lower-case), digits, and spaces ' '.
+ There is at least one word in s.
+ */
+
+
+
+//============================================================================================//
+//============================================================================================//
+//My solution, 0ms
+
+
+#include <iostream>
+using namespace std;
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        //handle constraints:
+        if (s.length() < 1)
+            return "";
+        string word = "";
+        string reversed_string = "";
+        int right_index = s.length()-1;
+        int left_index = s.length() -1;
+        for (left_index = s.length() -1 ; left_index >= 0 ; left_index--)
+        {
+            //get the next word
+            //1- move the left pointer to the left if it's seeing spaces
+            while(left_index>=0 && s[left_index] == ' ')
+            {
+                left_index --;
+            }
+            //no more spaces, mark this location as the end of the next word
+            right_index = left_index;
+            //move the left pointer to the left until it sees a space, or reaches the start of the big string
+            //and mark this location as the
+            while (left_index >= 0 && s[left_index] != ' ')
+            {
+                left_index --;
+            }
+            
+            //we now have the start and end indexes of a new word, let's copy it to the reversed string (from left to right)
+            word="";
+            for (int i = left_index+1 ; i < right_index+1 ; i++)
+            {
+                word.push_back(s[i]);
+            }
+            reversed_string+=word + ' ';
+            word  = "";
+     
+        }
+        //remove any spaces added at the end
+        while ((reversed_string[reversed_string.length()-1]) == ' ')
+               reversed_string.pop_back();
+        return reversed_string;
+    }
+};
+
+
+int main(int argc, const char * argv[]) {
+    string s =  "How    are     you     doing?";
+    Solution solution;
+    string s2 = solution.reverseWords(s);
+    cout<<s2<<endl;
+
+    return 0;
+}
+
