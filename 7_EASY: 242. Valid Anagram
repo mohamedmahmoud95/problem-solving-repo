@@ -1,0 +1,125 @@
+
+
+/*
+ https://leetcode.com/problems/valid-anagram/description/
+ 242. Valid Anagram (EASY)
+ Given two strings s and t, return true if t is an
+ anagram
+  of s, and false otherwise.
+
+  
+
+ Example 1:
+
+ Input: s = "anagram", t = "nagaram"
+
+ Output: true
+
+ Example 2:
+
+ Input: s = "rat", t = "car"
+
+ Output: false
+
+  
+
+ Constraints:
+
+ 1 <= s.length, t.length <= 5 * 104
+ s and t consist of lowercase English letters.
+ 
+ Follow up: What if the inputs contain Unicode characters? How would you adapt your solution to such a case?
+
+ */
+
+//============================================================================================//
+//My solution:
+//An anagram of a string is another string formed by rearranging the letters of the original string, using all the original letters exactly once.
+//so, we are basically checking if each and every character in str1 exists excactly once in the str2
+//mmm.. what if the same character is repeated in both strings?
+//then, we can create a map, or a 2D array, lising the characters and the count of each on in each string, then compare these maps/2D arrays.
+//would be easier to compare if they are sorted.
+
+//let's start with the brute force solution:
+//The following solution worked, and passed 34/51 test cases, faild 35 because Time Limit Exceeded, O(n^2) :(
+//scroll down for a more optimized solution
+
+
+//============================================================================================//
+//============================================================================================//
+class Solution {
+public:
+
+    int count_char_freq_in_string(char c, string s)
+    {
+        int freq = 0;
+        for (char a : s)
+        {
+            if (a == c)
+                freq++;
+        }
+        return freq;
+    }
+
+
+    bool isAnagram(string s, string t) {
+        if (s.length() != t.length())
+            return false;
+
+        if (s.length() <1 || t.length() <1) //actually, we only need to check the length of only one of them
+            return false;
+
+        if (s.length() == 1)
+            return s[0] == t[0];
+
+          map<char, int> char_freq_map_for_s;
+          map<char, int> char_freq_map_for_t;
+
+            char char_in_s;
+            char char_in_t;
+            int count_in_s;
+            int count_in_t;
+          for (int i = 0 ; i < s.length(); i++)
+          {
+            char_in_s = s[i];
+            count_in_s = count_char_freq_in_string(char_in_s, s);
+            char_freq_map_for_s[char_in_s] = count_in_s;
+
+            char_in_t = t[i];
+            count_in_t =  count_char_freq_in_string(char_in_t, t);
+            char_freq_map_for_t[char_in_t] = count_in_t;
+          }
+
+        return char_freq_map_for_s == char_freq_map_for_t;
+
+    }
+};
+
+
+
+//============================================================================================//
+//============================================================================================//
+//My 2nd solution:
+//passed all 51 test cases, 7ms
+//O(n)
+
+class Solution {
+public:
+
+    bool isAnagram(string s, string t) {
+        if (s.length() != t.length())
+            return false;
+
+          map<char, int> char_freq_map_for_s;
+          map<char, int> char_freq_map_for_t;
+
+          for (int i = 0 ; i < s.length(); i++)
+          {
+            char_freq_map_for_s[s[i]]++;
+            char_freq_map_for_t[t[i]]++;
+          }
+
+        return char_freq_map_for_s == char_freq_map_for_t;
+
+    }
+};
