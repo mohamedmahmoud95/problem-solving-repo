@@ -127,4 +127,40 @@ public:
 
 //============================================================================================//
 //============================================================================================//
-//another (bad approach) is to sort both strings alphabetically, then compare the 2 sorted strings for equality.
+//another (bad approach) is to sort both strings alphabetically, and then compare the 2 sorted strings for equality.
+
+//============================================================================================//
+//============================================================================================//
+//The following is a very good solution, written by another awesome developer.
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length())
+            return false; // this line provides higher memory usage
+
+
+        int[] count = new int[26]; // default initial value all zeroes
+
+
+        // Count the frequency of characters in string s
+        for (char x : s.toCharArray()) {
+            count[x - 'a']++;
+        }
+
+
+        // Decrement the frequency of characters in string t
+        for (char x : t.toCharArray()) {
+            count[x - 'a']--;
+        }
+
+
+        // Check if any character has non-zero frequency
+        for (int val : count) {
+            if (val != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
