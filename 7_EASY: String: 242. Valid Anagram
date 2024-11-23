@@ -131,6 +131,30 @@ public:
 
 //============================================================================================//
 //============================================================================================//
+//A minor update that would optimize code performance a lot is to use unordered_map (hash-map) instead of map
+//this one took 1ms instead of 7ms :D
+
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.length() != t.length())
+            return false;
+
+        unordered_map<char, int> char_freq_map_for_s;
+        unordered_map<char, int> char_freq_map_for_t;
+
+        for (int i = 0; i < s.length(); i++) {
+            char_freq_map_for_s[s[i]]++;
+            char_freq_map_for_t[t[i]]++;
+        }
+
+        return char_freq_map_for_s == char_freq_map_for_t;
+    }
+};
+
+//============================================================================================//
+//============================================================================================//
 //The following is a very good solution, written by another awesome developer.
 
 class Solution {
@@ -163,4 +187,14 @@ class Solution {
         return true;
     }
 }
+
+
+//============================================================================================//
+//============================================================================================//
+//============================================================================================//
+Follow-Up for Unicode Characters
+
+I believe that this approach works for any character set, including Unicode, as long as the underlying container supports those characters.
+The logic remains the same; the frequency maps will automatically handle Unicode characters properly.
+
 
