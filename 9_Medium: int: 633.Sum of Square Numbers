@@ -1,0 +1,63 @@
+/*
+ https://leetcode.com/problems/sum-of-square-numbers/
+ 
+ 633. Sum of Square Numbers (Medium)
+
+ Given a non-negative integer c, decide whether there're two integers a and b such that a2 + b2 = c.
+
+  
+
+ Example 1:
+
+ Input: c = 5
+ Output: true
+ Explanation: 1 * 1 + 2 * 2 = 5
+ Example 2:
+
+ Input: c = 3
+ Output: false
+  
+
+ Constraints:
+
+ 0 <= c <= 231 - 1
+ */
+
+//============================================================================================//
+//============================================================================================//
+//My first solution (it's a brute force solution, passed 103/127 test cases): 
+//I commented the constraints handling condition cause it keeps failing some test cases.
+
+#include <iostream>
+using namespace std;
+#include<cmath>
+//let's try the brute force solution first
+
+class Solution {
+public:
+    bool judgeSquareSum(int c) {
+        //handle constraints
+        //if (c <= 0 || c >= (pow(2, 32)-1) )
+        //    return false;
+        
+        int sqrt_of_c = sqrt(c);
+        for (int i = 0 ; i <= sqrt_of_c ; i++)
+        {
+            for (int j = i ; j <= sqrt_of_c  ; j++)
+            {
+                if (pow(i, 2) + pow(j, 2) == c)
+                    return true;
+            }
+        }
+        
+        return false;
+    }
+};
+
+
+int main(int argc, const char * argv[]) {
+    int c = 5;
+    Solution solution;
+    cout<<solution.judgeSquareSum(c)<<endl;
+    return 0;
+}
