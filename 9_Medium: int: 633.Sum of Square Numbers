@@ -99,3 +99,57 @@ public:
         return false;
     }
 };
+
+
+
+//============================================================================================//
+//============================================================================================//
+
+//Minor enhancement, a bit less memory usage (7.21mb  instead of 7.5mb in previous solution):
+
+class Solution {
+public:
+    bool judgeSquareSum(int c) {
+        //handle constraints
+        // if (c <= 0 || c >= (pow(2, 32)-1) )
+        //     return false;
+        
+        // int sqrt_of_c = sqrt(c);
+        // for (int i = 0 ; i <= sqrt_of_c ; i++)
+        // {
+        //     for (int j = i ; j <= sqrt_of_c  ; j++)
+        //     {
+        //         if (pow(i, 2) + pow(j, 2) == c)
+        //             return true;
+        //     }
+        // }
+        
+         //two pointers approach:
+         if(c <= 2)
+         {
+            return true;
+         }
+
+        int left = 0;
+        int right = sqrt(c) +1;
+        long long sum = 0;
+        while(left<=right)
+        {
+            sum = (long long)left*left + (long long)right * right;
+            if (sum == c)
+            {
+                return true;
+            }
+            else if (sum > c)
+            {
+                right --;
+            }
+            else
+            {
+                left ++;
+            }
+        }
+
+        return false;
+    }
+};
