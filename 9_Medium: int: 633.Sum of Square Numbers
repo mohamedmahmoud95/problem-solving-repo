@@ -25,7 +25,7 @@
 
 //============================================================================================//
 //============================================================================================//
-//My first solution (it's a brute force solution, passed 103/127 test cases): 
+//My first solution (it's a brute force solution, passed 103/127 test cases, scroll down for a better approach): 
 //I commented the constraints handling condition cause it keeps failing some test cases.
 
 #include <iostream>
@@ -61,3 +61,41 @@ int main(int argc, const char * argv[]) {
     cout<<solution.judgeSquareSum(c)<<endl;
     return 0;
 }
+
+
+//============================================================================================//
+//============================================================================================//
+
+//My 2nd and better solution, beats 100%, 0ms, passed all test cases الحمد لله
+
+class Solution {
+public:
+    bool judgeSquareSum(int c) {
+        //handle constraints
+        // if (c <= 0 || c >= (pow(2, 32)-1) )
+        //     return false;
+        
+         //two pointers approach:
+        int left = 0;
+        int right = sqrt(c) +1;
+        long long sum = 0;
+        while(left<=right)
+        {
+            sum = (long long)left*left + (long long)right * right;
+            if (sum == c)
+            {
+                return true;
+            }
+            else if (sum > c)
+            {
+                right --;
+            }
+            else
+            {
+                left ++;
+            }
+        }
+
+        return false;
+    }
+};
