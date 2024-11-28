@@ -40,7 +40,7 @@
 //============================================================================================//
 //============================================================================================//
 
-//My solution, 0ms
+//My solution (232ms to pass all test cases), scroll down for a much better solution
 
 class Solution {
 public:
@@ -105,3 +105,39 @@ bool isVowel(char a)
 
     }
 };
+
+
+
+
+//============================================================================================//
+//============================================================================================//
+//My second solution, 4ms, beats 28%:
+
+class Solution {
+public:
+    string reverseVowels(string str) {
+        int str_length = str.length();
+        if (str_length <= 1) return str;
+        int right = str_length - 1;
+        int left = 0;
+        string vowels = "aieouAIEOU";
+        while(left<right){
+                while(left<right && vowels.find(str[right]) == std::string::npos)
+                {
+                    right--;
+                }
+                while(left<right && vowels.find(str[left]) == std::string::npos)
+                {
+                    left++;
+                }
+                swap(str[right], str[left]);
+                right--;
+                left++;
+
+        }
+    return str;
+    }
+};
+
+
+
