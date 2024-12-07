@@ -71,7 +71,7 @@ public:
 //===================================================================================//
 //===================================================================================//
 
-//My second solution: 2ms, beats 46%,
+//My second solution: 2ms, beats 46%,  time complexity: O(n), space complexity: O(1)
 
 class Solution {
 public:
