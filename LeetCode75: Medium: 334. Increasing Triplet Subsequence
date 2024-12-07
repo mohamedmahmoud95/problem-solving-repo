@@ -36,7 +36,8 @@ Follow up: Could you implement a solution that runs in O(n) time complexity and 
 
 //===================================================================================//
 //===================================================================================//
-
+//My first solution, did not pass all test cases [time-limit exceeded]
+//scroll down for a better solution
 
 class Solution {
 public:
@@ -65,3 +66,30 @@ public:
         return false;
     }
 };
+
+
+//===================================================================================//
+//===================================================================================//
+
+//My second solution: 2ms, beats 46%,
+
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        if (nums.size() < 2) return false;
+        int first = INT_MAX;
+        int second = INT_MAX;
+        for (int n : nums){
+            if (n <= first) first = n;
+            else if (n <= second) second = n;
+            else return true;
+        }
+        return false;
+    }
+};
+
+
+
+//===================================================================================//
+//===================================================================================//
+
