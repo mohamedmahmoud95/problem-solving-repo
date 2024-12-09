@@ -36,6 +36,9 @@ Each element in the array appears twice except for one element which appears onl
 //==========================================================================//
 //==========================================================================//
 //My solution, 7ms, beats 22.5%, scroll down for a better solution
+//
+TC: O(N)
+SC: O(N)
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
@@ -51,3 +54,34 @@ public:
     }
 };
 //==========================================================================//
+//==========================================================================//
+//Better solution using bitwise operation XOR:
+//consider A,B bits, and Y as there XOR result:
+A B Y
+0 0 0
+0 1 1
+1 0 1
+1 1 0
+hence, 
+A^A=0
+A^B^A=B
+(A^A^B) = (B^A^A) = (A^B^A) = B This shows that position doesn't matter.
+Similarly , if we see , a^a^a......... (even times)=0 and a^a^a........(odd times)=a
+
+and since it's givin that the numbers will only be present once or twice, using XOR should work
+here is my solution using XOR, 0ms, beats 100%
+TC: O(N)
+SC: O(1)
+
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int result = 0;
+
+        for (auto num : nums) {
+            result ^= num;
+        }
+
+        return result;
+    }
+};
