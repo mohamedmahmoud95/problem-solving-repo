@@ -1,0 +1,99 @@
+
+
+/*
+https://leetcode.com/problems/palindrome-number/description/
+
+9. Palindrome Number
+
+Given an integer x, return true if x is a 
+palindrome
+, and false otherwise.
+
+ 
+
+Example 1:
+
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.
+Example 2:
+
+Input: x = -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+Example 3:
+
+Input: x = 10
+Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+ 
+
+Constraints:
+
+-231 <= x <= 231 - 1
+ 
+
+Follow up: Could you solve it without converting the integer to a string?
+*/
+
+//==================================================================================================//
+//==================================================================================================//
+
+//My first solution, 72ms, beats 5%
+// scroll down for a much better solution
+
+class Solution {
+public:
+    int maxOperations(vector<int>& nums, int k) {
+        int counter = 0;
+        int left = 0;
+        int right = nums.size() -1 ;
+        sort(nums.begin(), nums.end());
+        int sum = 0;
+        while (left < right)
+        {
+            sum = nums[left] + nums[right];
+            if (sum == k)
+            {
+                counter++;
+                left ++;
+                right --;
+            }
+            else if(sum < k) left++;
+            else right --;
+        }
+        return counter;
+    }
+};
+
+//==================================================================================================//
+//==================================================================================================//
+//2nd solution, 0ms, beats 100%
+//TC: O(log10(x)), SC: O(1)
+
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        // Negative numbers and numbers ending with 0 (except 0 itself) cannot be palindromes
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+        
+        int original_x = x;
+        int reversed_x = 0;
+
+        // Reverse the number
+        while (x != 0) {
+            int remainder = x % 10;
+            // Handle overflow: if reversed_x > INT_MAX / 10, it will overflow on the next step
+            if (reversed_x > (INT_MAX - remainder) / 10) {
+                return false; // Palindrome check is irrelevant if it overflows
+            }
+            reversed_x = reversed_x * 10 + remainder;
+            x /= 10;
+        }
+
+        // Compare reversed number with the original
+        return reversed_x == original_x;
+    }
+};
