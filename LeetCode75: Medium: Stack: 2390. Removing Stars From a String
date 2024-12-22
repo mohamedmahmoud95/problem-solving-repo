@@ -44,7 +44,8 @@ The operation above can be performed on s.
 
 //=======================================================================================//
 //=======================================================================================//
-//My solution, 10ms, beats 91.76%
+//My first solution, 10ms, beats 91.76%
+//scroll down for a bit more concise solution
 
 class Solution {
 public:
@@ -65,5 +66,26 @@ public:
         }
         reverse (s.begin(), s.end());
         return s;
+    }
+};
+
+
+
+//=======================================================================================//
+//=======================================================================================//
+//My second solution, 15ms, beats 78.85%
+
+
+class Solution {
+public:
+    string removeStars(string s) {
+        if(s.length() <1) return "";
+        string result ="";
+        for(char c : s)
+        {
+            if(c!='*')  result+= c;
+            else result.pop_back();
+        }
+        return result;
     }
 };
