@@ -34,7 +34,6 @@ public:
         int haystackLength = haystack.length();
         int needleLength = needle.length();
         if (needleLength == 0) return 0;
-        if (haystackLength == needleLength) return(haystack == needle)? 0 : -1;
 
         for(int i = 0 ; i <= haystackLength - needleLength ; i++)
         {
