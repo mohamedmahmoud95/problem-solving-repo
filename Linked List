@@ -1,0 +1,135 @@
+/*
+https://leetcode.com/problems/add-two-numbers/description/
+
+2. Add Two Numbers
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+ 
+
+Example 1:
+
+
+Input: l1 = [2,4,3], l2 = [5,6,4]
+Output: [7,0,8]
+Explanation: 342 + 465 = 807.
+Example 2:
+
+Input: l1 = [0], l2 = [0]
+Output: [0]
+Example 3:
+
+Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+Output: [8,9,9,9,0,0,0,1]
+ 
+
+Constraints:
+
+The number of nodes in each linked list is in the range [1, 100].
+0 <= Node.val <= 9
+It is guaranteed that the list represents a number that does not have leading zeros.
+*/
+
+
+//==========================================================================================//
+//==========================================================================================//
+//My first solution, 1565 / 1569 testcases passed, then got a run-time error
+//using pow repeatedly in the conversion is computationally expensive, especially for large lists.
+//scroll down for a much more optimized approach
+// Time Complexity: O(n + m)
+// Space Complexity: O(max(n, m))
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        long long num1 = 0, num2 = 0;
+        int exponent = 0;
+
+        // Convert first linked list to a number
+        while (l1 != nullptr) {
+            num1 += (l1->val) * pow(10, exponent);
+            exponent++;
+            l1 = l1->next;
+        }
+
+        // Convert second linked list to a number
+        exponent = 0;
+        while (l2 != nullptr) {
+            num2 += (l2->val) * pow(10, exponent);
+            exponent++;
+            l2 = l2->next;
+        }
+
+        long long sum = num1 + num2;
+
+        if (sum == 0) {
+            return new ListNode(0);
+        }
+
+        // Convert the sum back into a linked list
+        ListNode* dummyHead = new ListNode(0); 
+        ListNode* ptr = dummyHead;
+
+        while (sum > 0) {
+            int digit = sum % 10;
+            ptr->next = new ListNode(digit); 
+            ptr = ptr->next;               
+            sum /= 10;   // Remove the last digit from the sum
+        }
+
+        return dummyHead->next; // Skip the dummy node
+    }
+};
+
+
+
+
+
+//==========================================================================================//
+//==========================================================================================//
+//2nd solution, 0ms, beats 100%
+//	Time Complexity: O(max(m, n))
+//	Space Complexity: O(max(m, n))
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dummyHead = new ListNode(0); // Dummy node for easy manipulation
+        ListNode* current = dummyHead;
+        int carry = 0;
+
+        while (l1 != nullptr || l2 != nullptr || carry > 0) {
+            int sum = carry;
+            
+            if (l1 != nullptr) {
+                sum += l1->val;
+                l1 = l1->next;
+            }
+            
+            if (l2 != nullptr) {
+                sum += l2->val;
+                l2 = l2->next;
+            }
+
+            carry = sum / 10;
+            int digit = sum % 10;
+
+            current->next = new ListNode(digit);
+            current = current->next;
+        }
+
+        return dummyHead->next; // Skip the dummy node
+    }
+};
