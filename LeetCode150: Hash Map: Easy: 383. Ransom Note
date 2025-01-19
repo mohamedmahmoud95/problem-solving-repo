@@ -1,0 +1,82 @@
+/*
+https://leetcode.com/problems/ransom-note/description
+
+383. Ransom Note
+
+Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+
+Each letter in magazine can only be used once in ransomNote.
+
+ 
+
+Example 1:
+
+Input: ransomNote = "a", magazine = "b"
+Output: false
+Example 2:
+
+Input: ransomNote = "aa", magazine = "ab"
+Output: false
+Example 3:
+
+Input: ransomNote = "aa", magazine = "aab"
+Output: true
+ 
+
+Constraints:
+
+1 <= ransomNote.length, magazine.length <= 105
+ransomNote and magazine consist of lowercase English letters.
+
+*/
+
+//====================================================================================================//
+//====================================================================================================//
+//first solution, using hash map, 3ms, beats 65%
+
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        unordered_map<char, int> freq;
+        
+        // Count frequencies of characters in magazine
+        for (char c : magazine) {
+            freq[c]++;
+        }
+        
+        // Check if ransomNote can be constructed
+        for (char c : ransomNote) {
+            if (--freq[c] < 0) {
+                return false; // Not enough characters
+            }
+        }
+        
+        return true; // All characters are available
+    }
+};
+
+
+//====================================================================================================//
+//====================================================================================================//
+//chatGPT's solution, 0ms, beats 100%
+
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        vector<int> freq(26, 0);
+        
+        // Count frequencies of characters in magazine
+        for (char c : magazine) {
+            freq[c - 'a']++;
+        }
+        
+        // Check if ransomNote can be constructed
+        for (char c : ransomNote) {
+            if (--freq[c - 'a'] < 0) {
+                return false; // Not enough characters in magazine
+            }
+        }
+        
+        return true;
+    }
+};
