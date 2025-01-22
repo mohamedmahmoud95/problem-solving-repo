@@ -50,7 +50,8 @@ At most 3 * 104 calls will be made to push, pop, top, and getMin.
 
 //=======================================================================================//
 //=======================================================================================//
-//My firtst solution, 4ms, beats 46%, will try to add a more optimized solution later isa
+// My first solution, 0ms, beats 100%, 
+// will try to add a more memory optimized solution later isa
 
 
 class MinStack {
