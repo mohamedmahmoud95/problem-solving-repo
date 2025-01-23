@@ -87,7 +87,8 @@ path is a valid absolute Unix path.
 
 //===========================================================================================//
 //===========================================================================================//
-//Stack (but not really a stack) solution, 3ms, beats 59%
+// 1st solution, 3ms, beats 59%
+// scroll down for a more optimized solution
 
 class Solution {
 public:
@@ -119,5 +120,45 @@ public:
         }
 
         return simplifiedPath;
+    }
+};
+
+
+
+//===========================================================================================//
+//===========================================================================================//
+// 2nd solution, 0ms, beats 100%
+
+class Solution {
+public:
+    string simplifyPath(string path) {
+        vector<string> stack;
+        int n = path.size();
+        int i = 0;
+
+        while (i < n) {
+            // Skip multiple slashes
+            while (i < n && path[i] == '/') i++;
+
+            // Extract next component
+            int start = i;
+            while (i < n && path[i] != '/') i++;
+            string component = path.substr(start, i - start);
+
+            // Process component
+            if (component == "..") {
+                if (!stack.empty()) stack.pop_back(); // Move up a directory
+            } else if (!component.empty() && component != ".") {
+                stack.push_back(component); // Valid directory name
+            }
+        }
+
+        // Reconstruct the canonical path
+        string result = "/";
+        for (int j = 0; j < stack.size(); j++) {
+            if (j > 0) result += "/";
+            result += stack[j];
+        }
+        return result;
     }
 };
