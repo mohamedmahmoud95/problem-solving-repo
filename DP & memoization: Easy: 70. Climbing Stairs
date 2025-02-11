@@ -1,0 +1,69 @@
+
+/*
+https://leetcode.com/problems/climbing-stairs/description/
+
+70. Climbing Stairs
+
+You are climbing a staircase. It takes n steps to reach the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+Example 1:
+
+Input: n = 2
+Output: 2
+Explanation: There are two ways to climb to the top.
+1. 1 step + 1 step
+2. 2 steps
+Example 2:
+
+Input: n = 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
+ 
+
+Constraints:
+
+1 <= n <= 45
+*/
+
+//===============================================================================//
+//===============================================================================//
+//DP solution, 0ms, beats 100%
+//time complexity of O(n)
+//space complexity of O(1)
+
+class Solution {
+public:
+    int climbStairs(int n) {
+        if (n==1 || n ==2) return n;
+        int a = 1, b = 2;
+        for (int i = 3 ; i <= n ; i++)
+        {
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+        return b;
+    }
+};
+
+/*
+//Explanation
+
+the number of ways to reach the nth step is the sum of the ways to reach the (n-1)th step and the (n-2)th step.
+This is because we can arrive at the nth step either from the (n-1)th step by taking 1 step or from the (n-2)th step by taking 2 steps.
+This problem thus reduces to finding the (n+1)th Fibonacci number.
+
+
+Base Cases: If n is 1, there's only one way to climb (1 step). If n is 2, there are two ways (1+1 steps or 2 steps).
+
+Iterative Calculation: For values of n greater than 2,
+we initialize two variables a and b to represent the number of ways to reach the 1st and 2nd steps, respectively.
+We then iterate from 3 to n, updating these variables to hold the number of ways to reach the current step based on the sum of the previous two steps.
+
+Result: After the loop completes, b holds the number of ways to reach the nth step.
+*/
