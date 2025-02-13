@@ -1,0 +1,77 @@
+/*
+https://leetcode.com/problems/symmetric-tree/description/
+
+101. Symmetric Tree
+
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+Example 1:
+
+Input: root = [1,2,2,3,4,4,3]
+Output: true
+Example 2:
+
+Input: root = [1,2,2,null,3,null,3]
+Output: false
+
+Constraints:
+
+The number of nodes in the tree is in the range [1, 1000].
+-100 <= Node.val <= 100
+ 
+
+Follow up: Could you solve it both recursively and iteratively?
+*/
+
+
+//==========================================================================================================//
+//==========================================================================================================//
+// 1- Recursive (DFS) solution, 0ms, beats 100%
+
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if (root == nullptr) return true;
+        return isMirror(root->left, root->right);
+    }
+    
+    bool isMirror(TreeNode* left, TreeNode* right) {
+        if (left == nullptr && right == nullptr) return true;
+        if (left == nullptr || right == nullptr) return false;
+        return (left->val == right->val) 
+            && isMirror(left->left, right->right) 
+            && isMirror(left->right, right->left);
+    }
+};
+
+
+//==========================================================================================================//
+//==========================================================================================================//
+// 2- Iterative (BFS) solution, 0ms, beats 100%
+
+#include <queue>
+
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if (root == nullptr) return true;
+        std::queue<TreeNode*> q;
+        q.push(root->left);
+        q.push(root->right);
+        
+        while (!q.empty()) {
+            TreeNode* n1 = q.front(); q.pop();
+            TreeNode* n2 = q.front(); q.pop();
+            
+            if (n1 == nullptr && n2 == nullptr) continue;
+            if (n1 == nullptr || n2 == nullptr) return false;
+            if (n1->val != n2->val) return false;
+            
+            q.push(n1->left);
+            q.push(n2->right);
+            q.push(n1->right);
+            q.push(n2->left);
+        }
+        return true;
+    }
+};
