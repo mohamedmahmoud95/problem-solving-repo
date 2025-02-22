@@ -1,0 +1,79 @@
+/*
+https://leetcode.com/problems/max-points-on-a-line/
+
+149. Max Points on a Line
+
+Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same straight line.
+
+
+Example 1:
+
+Input: points = [[1,1],[2,2],[3,3]]
+Output: 3
+Example 2:
+
+
+Input: points = [[1,1],[3,2],[5,3],[4,1],[2,3],[1,4]]
+Output: 4
+ 
+Constraints:
+
+1 <= points.length <= 300
+points[i].length == 2
+-104 <= xi, yi <= 104
+All the points are unique.
+*/
+
+//=====================================================================================//
+//=====================================================================================//
+// Iterative solution, 27s, beats 56%
+// Time complexity: O(n^2)
+// Space complexity: O(n)
+
+
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        int n = points.size();
+        if (n <= 2) return n; 
+
+        int maxPointsOnLine = 2; // At least 2 points lie on the same line
+
+        for (int i = 0; i < n; i++) {
+            unordered_map<string, int> slopeCount; 
+            int duplicate = 1; 
+
+            for (int j = i + 1; j < n; j++) {
+                int dx = points[j][0] - points[i][0];
+                int dy = points[j][1] - points[i][1];
+
+                if (dx == 0 && dy == 0) {
+                    duplicate++; 
+                    continue;
+                }
+
+                int gcd = computeGCD(dx, dy);
+                string slope = to_string(dy / gcd) + "/" + to_string(dx / gcd);
+
+                slopeCount[slope]++;
+            }
+
+            maxPointsOnLine = max(maxPointsOnLine, duplicate); // Handle case where all points are duplicates
+            for (auto& entry : slopeCount) {
+                maxPointsOnLine = max(maxPointsOnLine, entry.second + duplicate);
+            }
+        }
+
+        return maxPointsOnLine;
+    }
+
+private:
+    int computeGCD(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+};
